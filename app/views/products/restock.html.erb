@@ -1,0 +1,22 @@
+<h3>Restock Product</h3>
+
+<%= form_with url: restock_product_path(@product), method: :post do %>
+  <div>
+    <%= label_tag :quantity, "Quantity" %>
+    <%= number_field_tag :quantity %>
+  </div>
+
+  <div>
+    <%= label_tag :price, "Price per Unit" %>
+    <%= number_field_tag :price, step: 0.01 %>
+  </div>
+
+  <div>
+    <%= label_tag :company_info_id, "Select Supplier" %>
+    <%= select_tag :company_info_id, options_from_collection_for_select(CompanyInfo.all, :id, :company_name), prompt: "Select Supplier" %>
+  </div>
+
+  <div>
+    <%= submit_tag "Restock" %>
+  </div>
+<% end %>

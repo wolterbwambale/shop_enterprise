@@ -1,0 +1,66 @@
+<h2 class="text-center py-2">Goods Received</h2>
+<%= form_with url: goods_received_products_path, method: :get, local: true do %>
+  <div class="row">
+    <div class="col-md-3">
+      <%= label_tag :from_date, "From Date" %>
+      <%= date_field_tag :from_date, params[:from_date], class: "form-control" %>
+    </div>
+    <div class="col-md-3">
+      <%= label_tag :to_date, "To Date" %>
+      <%= date_field_tag :to_date, params[:to_date], class: "form-control" %>
+    </div>
+    <div class="col-md-3">
+      <%= label_tag :period, "Period" %>
+      <%= select_tag :period, options_for_select([["Day", "day"], ["Month", "month"], ["Year", "year"]], params[:period]), class: "form-control" %>
+    </div>
+    <div class="col-md-3 align-self-end">
+      <%= submit_tag "Filter", class: "btn btn-primary" %>
+      <%= link_to "Download PDF", goods_received_products_path(format: :pdf, period: params[:period], from_date: params[:from_date], to_date: params[:to_date]), class: "btn btn-secondary" %>
+    </div>
+  </div>
+<% end %>
+
+<hr>
+
+
+<% @goods_received_by_company.each do |company, goods_received| %>
+  <h5><strong><%= company.company_name %></strong></h5>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Date Received</th>
+        <th>Product Name</th>
+        <th>Quantity</th>
+        <th>Rate</th>
+        <th>Total Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% company_total = 0 %>
+      <% goods_received.each do |goods| %>
+        <% total_cost = goods.product.price * goods.quantity %>
+        <% company_total += total_cost %>
+        <tr>
+          <td><%= goods.created_at.strftime("%Y-%m-%d") %></td>
+          <td><%= goods.product.product_name %></td>
+          <td><%= goods.quantity %></td>
+          <td><%= number_with_delimiter(sprintf("%.2f", goods.product.price)) %></td>
+          <td><%= number_with_delimiter(sprintf("%.2f", total_cost)) %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <td colspan="4"><strong>Company Total:</strong></td>
+        <td><strong><%= number_with_delimiter(sprintf("%.2f", company_total)) %></strong></td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>
+
+<table class="table table-bordered table-striped">
+  <tbody>
+    <tr>
+      <td colspan="4"><strong>Grand Total:</strong></td>
+      <td><strong><%= number_with_delimiter(sprintf("%.2f", @grand_total)) %></strong></td>
+    </tr>
+  </tbody>
+</table>

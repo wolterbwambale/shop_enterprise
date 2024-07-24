@@ -1,0 +1,31 @@
+<h4 class="text-center">Issued summary for <%= @product.product_name %></h4>
+
+<table class="table table-bordered table-striped table-hover table-sm">
+  <thead  class="thead-dark ">
+    <tr>
+    <th>Item Name</th>
+    <th>Item Unit</th>
+      <th>Quantity</th>
+      <th>Amount</th>
+      <th>Outlet Type</th>
+      <th>Total Amount</th>
+      <th>Issued At</th>
+    </tr>
+    <%total_amount=0%>
+  </thead>
+  <tbody>
+    <% @issued_outlets.each do |outlet| %>
+      <tr>
+      <td><%= outlet.product.product_name %></td>
+      <td><%= outlet.product.product_unit.title %></td>
+        <td><%= outlet.quantity %></td>
+        <td><%= number_with_delimiter(sprintf("%.2f", outlet.product.price)) %></td>
+        <td><%= outlet.outlet_type.name %></td>
+        <td><%= number_with_delimiter(sprintf("%.2f",outlet.quantity * outlet.product.price))%></td>
+        <td><%= outlet.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Back', product_path(@product) %>

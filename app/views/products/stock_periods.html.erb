@@ -1,0 +1,26 @@
+<h4>Restock History</h4>
+<% if @product.restocks.any? %>
+  <table>
+    <thead>
+      <tr>
+       <th>Code</th>
+        <th>Date</th>
+        <th>product name</th>
+        <th>Quantity Restocked</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @product.restocks.each do |restock| %>
+        <tr>
+          <td><%= restock.id%></d>
+          <td><%= restock.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+          <td><%= @product.product_name %></td>
+          <td><%= restock.quantity %></td>
+          <td><%= @product.company_info.company_name %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No restock history available.</p>
+<% end %>

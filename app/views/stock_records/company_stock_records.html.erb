@@ -1,0 +1,22 @@
+<h1>Stock Records for <%= @company.company_name %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @stock_records.each do |record| %>
+      <tr>
+        <td><%= record.product.product_name %></td>
+        <td><%= record.quantity %></td>
+        <td><%= number_to_currency(record.price) %></td>
+        <td><%= record.created_at.to_s(:short) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

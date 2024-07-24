@@ -1,0 +1,45 @@
+<h1>All Orders</h1>
+<%= form_with url: orders_path, method: :get, local: true do |form| %>
+    <div class="row">
+      <div class="col-md-3">
+        <%= form.label :start_date, "Start Date" %>
+        <%= form.date_field :start_date, class: "form-control" %>
+      </div>
+      <div class="col-md-3">
+        <%= form.label :end_date, "End Date" %>
+        <%= form.date_field :end_date, class: "form-control" %>
+      </div>
+      <div class="col-md-3 align-self-end">
+        <%= form.submit "Filter", class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+  
+<table class="table table-bordered table-striped table-hover table-sm">
+  <thead>
+    <tr>
+      <th>Order ID</th>
+      <th>Item Name</th>
+      <th>Quantity</th>
+      <th>Unit Price</th>
+      <th>Total Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @orders.each do |order| %>
+      <% order.order_items.each do |item| %>
+        <tr>
+          <td><%= order.id %></td>
+          <td><%=link_to item.product_detail.name,order_path(order) %></td>
+          <td><%= item.quantity %></td>
+          <td><%= number_with_delimiter(sprintf("%.2f",item.product_detail.price))%></td>
+          <td><%= number_with_delimiter(sprintf("%.2f",item.quantity * item.product_detail.price)) %></td> 
+        </tr>
+      <% end %>
+    <% end %>
+    <tr>
+      <td colspan="4"><strong>Total Sales:</strong></td>
+      <td><strong><%= number_with_delimiter(sprintf("%.2f",@total_sales)) %></strong></td>
+    </tr>
+  </tbody>
+</table>

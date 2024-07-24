@@ -1,0 +1,38 @@
+
+<h3 class="py-2 px-2">Order Receipt</h3>
+
+<p>Order ID: <%= @order.id %></p>
+<p>Order Date: <%= @order.created_at.strftime("%Y-%m-%d") %></p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Unit Price</th>
+      <th>Quantity</th>
+      <th>Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @order.order_items.each do |item| %>
+      <tr>
+        <td><%= item.product_detail.name %></td>
+        <td><%= number_with_delimiter(sprintf("%.2f",item.product_detail.price&.to_f)) %></td>
+        <td><%=link_to item.quantity, edit_order_path %></td>
+        <td><%= number_with_delimiter(sprintf("%.2f",item.quantity * item.product_detail.price)) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="3"><strong>Total:</strong></td>
+      <td><%= number_with_delimiter(sprintf("%.2f",@order.total_price)) %></td>
+    </tr>
+  </tfoot>
+</table>
+
+<%= link_to 'Print Receipt', receipt_order_path(@order), class: "btn btn-secondary" %>
+
+<button id="print-receipt" class="btn btn-primary">Print Receipt</button>
+
+<%= javascript_include_tag "print_receipt" %>

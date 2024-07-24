@@ -1,0 +1,5 @@
+<h4>OutletTypes</h4>
+<%= link_to"New outlet", new_outlet_type_path%>
+<% @outlet_types.each do |outlet_type|%>
+    <p><%= link_to outlet_type.name, outlet_type%></p>
+    <%end%>

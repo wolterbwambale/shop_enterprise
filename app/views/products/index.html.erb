@@ -1,0 +1,86 @@
+<h2 class="text-center py-2">Physical stock</h2>
+
+
+<div class="mt-4 px-4">
+  <%= link_to "Generate PDF", products_path(format: :pdf, search: params[:search], period: params[:period], from_date: params[:from_date], to_date: params[:to_date], department_id: params[:department_id]), class: "btn btn-secondary tbt-sm" %>
+</div>
+
+<div class="d-flex justify-content-end pt-6 py-12">
+  <%= form_tag(products_path, method: :get, data: { controller: "search" }) do %>
+    <div class="d-flex flex-row py-2 px-4 gap-2">
+      <div class="form-group">
+        <%= label_tag(:search, "Search:") %>
+        <%= text_field_tag(:search, params[:search], class: "form-control", data: { action: "input->search#search", search_target: "input" }) %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<%= form_tag(products_path, method: :get) do %>
+  <div class="d-flex flex-row py-4 px-4 gap-2">
+    <div class="form-group">
+      <%= label_tag(:period, "Period:") %>
+      <%= select_tag(:period, options_for_select([["Day", "day"], ["Month", "month"], ["Year", "year"]], params[:period]), prompt: "Select a period", class: "form-control") %>
+    </div>
+    <div class="form-group">
+      <%= label_tag(:from_date, "From:") %>
+      <%= date_field_tag(:from_date, params[:from_date], class: "form-control") %>
+    </div>
+    <div class="form-group">
+      <%= label_tag(:to_date, "To:") %>
+      <%= date_field_tag(:to_date, params[:to_date], class: "form-control") %>
+    </div>
+    <div class="form-group">
+      <%= label_tag(:department_id, "Department:") %>
+      <%= select_tag(:department_id, options_from_collection_for_select(Department.all, :id, :department_name, params[:department_id]), include_blank: true, class: "form-control") %>
+    </div>
+    <%= submit_tag("Search", class: "btn btn-primary btn-sm align-self-end") %>
+  </div>
+<% end %>
+
+<% if @products.any? %>
+  <div class="px-2 gap-2">
+    <%= paginate @products %>
+  </div>
+
+  <table class="table table-bordered table-striped table-hover table-sm">
+    <thead class="thead-dark">
+      <tr>
+        <th>Code</th>
+        <th>Product name</th>
+        <th>Quantity</th>
+        <th>Units</th>
+        <th>Unit Price</th>
+        <th>Total Amount</th>
+        <th>Department</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% total_amount = 0 %>
+      <% @products.each do |product| %>
+        <tr>
+          <td><%= product.id %></td>
+          <td><%= link_to product.product_name, product_path(product) %></td>
+          <td><%= product.quantity %></td>
+          <td><%= product.product_unit.title if product.product_unit %></td>
+          <td><%= number_with_delimiter(sprintf("%.2f", product.price)) %></td>
+          <td><%= number_with_delimiter(sprintf("%.2f", product.total_amount)) %></td>
+          <td><%= product.department&.department_name %></td>
+        </tr>
+        <% total_amount += product.total_amount %>
+      <% end %>
+      <% if @products.current_page == @products.total_pages %>
+        <tr>
+          <td colspan="5"><strong>Grand Total:</strong></td>
+          <td><strong><%= number_with_delimiter(sprintf("%.2f", @grand_total)) %></strong></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="px-2 gap-2">
+    <%= paginate @products %>
+  </div>
+<% else %>
+  <p>No products found for the selected period.</p>
+<% end %>

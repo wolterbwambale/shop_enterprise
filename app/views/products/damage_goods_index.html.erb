@@ -1,0 +1,54 @@
+<%= form_with url: damage_goods_index_path, method: :get, local: true do %>
+    <div class="row">
+      <div class="col-md-3">
+        <%= label_tag :from_date, "From Date" %>
+        <%= date_field_tag :from_date, params[:from_date], class: "form-control" %>
+      </div>
+      <div class="col-md-3">
+        <%= label_tag :to_date, "To Date" %>
+        <%= date_field_tag :to_date, params[:to_date], class: "form-control" %>
+      </div>
+      <div class="col-md-3 align-self-end">
+        <%= submit_tag "Filter", class: "btn btn-primary" %>
+      </div>
+      <div class="col-md-3 align-self-end">
+        <%= link_to "Download PDF", damage_goods_index_path(format: :pdf, from_date: params[:from_date], to_date: params[:to_date]), class: "btn btn-secondary" %>
+      </div>
+    </div>
+  <% end %>
+  
+  <hr>
+  <h2>Damage History</h2>
+  
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Date Damaged</th>
+        <th>Product Name</th>
+        <th>Quantity Damaged</th>
+        <th>Rate</th>
+        <th>Total Cost</th>
+        <th>Reason</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% grand_total = 0 %>
+      <% @damaged_goods.each do |damaged_good| %>
+        <% total_cost = damaged_good.product.price * damaged_good.quantity %>
+        <% grand_total += total_cost %>
+        <tr>
+          <td><%= damaged_good.damaged_date.strftime("%Y-%m-%d") %></td>
+          <td><%= damaged_good.product.product_name %></td>
+          <td><%= damaged_good.quantity %></td>
+          <td><%= number_with_delimiter(sprintf("%.2f", damaged_good.product.price)) %></td>
+          <td><%= number_with_delimiter(sprintf("%.2f",total_cost)) %></td>
+          <td><%= damaged_good.damage_reason %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <td colspan="4"><strong>Grand Total:</strong></td>
+        <td colspan="2"><strong><%= number_with_delimiter(sprintf("%.2f",grand_total)) %></strong></td>
+      </tr>
+    </tbody>
+  </table>
+  

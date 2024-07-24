@@ -1,0 +1,22 @@
+<h4>Company Name: <%= @company_info.company_name%></h4>
+<ul class="list-group list-group-horizontal-xxl">
+  <li class="list-group-item"><p>physical Address: <%=@company_info.physical_address%></p></li>
+  <li class="list-group-item"><p>website:  <%= @company_info.website  %></p></li>
+  <li class="list-group-item"><p>P.O.Box : <%= @company_info.postal_box%></p></p></li>
+  <li class="list-group-item"><p>Telephone: <%= @company_info.telephone%></p></li>
+  <li class="list-group-item"><p>Tin Number: <%= @company_info.Tin_number%></p></p></li>
+</ul>
+
+
+<%=link_to "edit", edit_company_info_path, class:"btn btn-secondary btn-sm"%>
+
+<%=link_to "Delete", company_info_path(@company_info), data: {
+    turbo_method: :delete,
+    turbo_confirm: "Are you sure, You want to delete #{@company_info.company_name}?"
+  }, class:"btn btn-danger btn-sm" %>
+
+  <%= link_to " back",{ action: :index },class:"btn btn-dark btn-sm"%>
+
+
+
+

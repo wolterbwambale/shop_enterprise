@@ -1,0 +1,21 @@
+<%= form_with(model: product, url: issue_product_path(product), method: :patch) do |form| %>
+  <div class="row mb-3">
+   <div class="col-6">
+    <%= form.label :quantity %>
+    <%= number_field_tag 'product[quantities][]', nil, min: 0.01, max: product.quantity, step: 0.01, class: "form-control w-50" %>
+  </div>
+  </div>
+
+  <div class="row mb-3">
+  <div class="col-6">
+  <%= form.label :outlet_type_id, class: 'form-label' %>
+  <%= form.collection_select :outlet_type_id, OutletType.all, :id, :name,{}, { class: 'form-select' } %>
+</div>
+</div>
+
+<div class="row mb-3">
+          <div class="col-6">
+            <%= form.submit 'Issue', class: 'btn btn-primary w-100' %>
+          </div>
+        </div>
+<% end %>

@@ -1,0 +1,21 @@
+<h3 class="text-center">List of Units</h3>
+<div class="container">
+<%= link_to "Add New unit", new_product_unit_path ,class:"btn btn-primary btn-sm mt-2 mx-2  mb-2"%>
+<%= link_to "Generate PDF", product_units_path(format: :pdf, search: params[:search], period: params[:period], from_date: params[:from_date], to_date: params[:to_date]), class: "btn btn-secondary tbt-sm" %>
+<table class="table table-bordered table-striped table-hover table-sm">
+  <thead class="thead-dark">
+  <tr>
+  <th>Code</th>
+  <th>Unit Name</th>
+  <th>Description</th>
+  </tr>
+  </thead>
+   <%@product_units.each do |product_unit| %>
+    <tr>
+    <td><%= product_unit.id%></td>
+    <td><%= link_to product_unit.title, edit_product_unit_path(product_unit)%></td>
+    <td><%=product_unit.description %></td>
+    </tr>
+    <%end%>
+</table>
+</div>

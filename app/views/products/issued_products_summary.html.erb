@@ -1,0 +1,55 @@
+<h3 class="text-center py-2">Issued Products Summary</h3>
+
+  <%= form_with url: issued_products_summary_path, method: :get, local: true do %>
+    <div class="d-flex flex-row py-4 px-4 gap-2">
+    <div class="form-group">
+      <%= label_tag :outlet_type_id, "Outlet Type" %>
+      <%= select_tag :outlet_type_id, options_from_collection_for_select(OutletType.all, :id, :name, params[:outlet_type_id]), include_blank: true, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag :from_date, "From Date" %>
+      <%= date_field_tag :from_date, params[:from_date], class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag :to_date, "To Date" %>
+      <%= date_field_tag :to_date, params[:to_date], class: "form-control" %>
+    </div>
+      <%= submit_tag "Filter", class: "btn btn-primary align-self-end" %>
+      </div>
+  <% end %>
+  
+      <div class="d-flex justify-content-end py-2 px-4">
+      <%= link_to "Generate PDF", issued_products_summary_path(format: :pdf, outlet_type_id: params[:outlet_type_id], from_date: params[:from_date], to_date: params[:to_date]), class: "btn btn-secondary" %>
+    </div>
+
+
+<table class="table table-bordered table-striped table-hover table-sm">
+  <thead>
+    <tr>
+      <th>Item Name</th>
+      <th>Item Unit</th>
+      <th>Outlet Type</th>
+      <th>Total Quantity Issued</th>
+      <th>Rate</th>
+      <th>Total Amount</th>
+    </tr>
+    <% total_amount = 0 %>
+  </thead>
+  <tbody>
+    <% @issued_products_summary.each do |summary| %>
+      <tr>
+        <td><%= summary[:product_name] %></td>
+        <td><%= summary[:product_unit] %></td>
+        <td><%= summary[:outlet_type] %></td>
+        <td><%= summary[:total_quantity] %></td>
+        <td><%= summary[:product_price] %></td>
+        <td><%= number_to_currency(summary[:total_quantity] * summary[:product_price], unit: "UGX ", precision: 0, delimiter: ",", separator: ".", format: "%n %u") %></td>
+      </tr>
+      <% total_amount += summary[:total_quantity] * summary[:product_price] %>
+    <% end %>
+    <tr>
+      <td colspan="5"><strong>Grand Total</strong></td>
+      <td><strong><%= number_with_delimiter(sprintf("%.2f", total_amount)) %></strong></td>
+    </tr>
+  </tbody>
+</table>

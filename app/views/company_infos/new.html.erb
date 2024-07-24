@@ -1,0 +1,54 @@
+<%=form_with model:@company_info do | form | %>
+    <div class="form-row h-100 justify-content-center align-items-center">
+    <div class="row mb-3">
+    <div class="col-sm-6">
+    <%= form.label :company_name%>
+    <%=form.text_field :company_name, class:"form-control"%>
+    </div>
+    </div>
+
+    <div class="row mb-3">
+    <div class="col-sm-6">
+    <%= form.label :physical_address%>
+    <%=form.text_field :physical_address, class:"form-control"%>
+    </div>
+    </div>
+
+    <div class="row mb-3">
+    <div class="col-sm-6">
+    <%=form.label :website %>
+    <%=form.text_field :website, class:"form-control"%>
+    </div>
+    </div>
+
+    <div class="row mb-3">
+    <div class="col-sm-6">
+    <%=form.label :postal_box%>
+    <%=form.text_field :postal_box,class:"form-control"%>
+    </div>
+    </div>
+    
+    <div class="row mb-3">
+    <div class="col-sm-6">
+    <%=form.label :address%>
+    <%=form.text_field :address, class:"form-control"%>
+    </div>
+    </div>
+
+    <div class="row mb-3">
+    <div class="col-sm-6">
+    <%=form.label :telephone%>
+    <%=form.text_field :telephone, class:"form-control"%>
+    </div>
+    </div>
+
+    <div class="row mb-3">
+    <div class="col-sm-6">
+    <%=form.label :tin_number%>
+    <%=form.text_field :Tin_number,class:"form-control"%>
+    </div>
+    </div>
+    
+    <%=form.submit %>
+    </div>
+    <%end%>

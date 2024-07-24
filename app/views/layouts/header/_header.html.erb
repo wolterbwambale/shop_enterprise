@@ -1,0 +1,106 @@
+<main>
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+  <div class="container-fluid">
+  <%= link_to "Physical stock", products_path, class: "nav-link text-white", data: { turbolinks: false } %>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+        <%=link_to 'New product',new_product_path, class:"nav-link text-white"%>
+        </li>
+        <li class="nav-item">
+        <%= link_to 'Issue', select_for_issue_products_path, class:"nav-link text-white" %>
+        </li>
+        <li class="nav-item">
+        <%= link_to "Issued Summary", issued_products_summary_path, class:"nav-link text-white" %>
+        </li>
+        <li class="nav-item">
+        <%= link_to "Units", product_units_path, class:"nav-link text-white"%>
+        </li>
+        <li class="nav-item">
+        <%= link_to "Detailed Summary", product_detailed_summary_path, class:"nav-link text-white" %>
+        </li>
+        <li class="nav-item">
+        <%= link_to "Goods Received", goods_received_products_path, class: "nav-link text-white" %>
+        </li>
+        <li class="nav-item">
+        <%= link_to "Create supplier",new_company_info_path, class:"nav-link text-white"%>
+        </li>
+        <li class="nav-item">
+        <%= link_to "Suppliers",company_infos_path, class:"nav-link text-white"%>
+        </li>
+        <li class="nav-item">
+        <%= link_to "Outlet", new_outlet_type_path, class:"nav-link text-white"%>
+        </li>
+       
+        <li class="nav-item">
+        <%= link_to "Damage History", damage_goods_index_path, class: "nav-link text-white" %>
+      </li>
+      
+
+        <li class="nav-item">
+        <%= link_to "Company pro",new_company_detail_path, class:"nav-link text-white"%>
+        </li>
+
+        <li class="nav-item">
+        <%= link_to 'General Report', general_report_products_path, class: 'nav-link text-white' %>
+      </li>
+
+      <li class="nav-item">
+        <%= link_to 'Department', departments_path, class: 'nav-link text-white' %>
+      </li>
+
+      
+
+      <li class="nav-item">
+        <%= link_to 'P.O.S', new_order_path, class: 'nav-link text-white' %>
+      </li>
+
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Settings
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li>
+           <%= link_to 'set product', new_product_detail_path, class:"dropdown-item" %>
+           </li>
+           <li>
+            <%= link_to 'products', product_details_path, class:"dropdown-item" %>
+            </li>
+            <li>
+            <%= link_to 'set category', new_category_path, class:"dropdown-item" %>
+            </li>
+            
+            <li>
+            <%= link_to 'Categories', categories_path, class:"dropdown-item" %>
+            </li>
+            <li>
+            <%= link_to 'set product', new_product_detail_path, class:"dropdown-item" %>
+            </li>
+            <li>
+            <%= link_to 'set product', new_product_detail_path, class:"dropdown-item" %>
+            </li>
+            <li>
+            <%= link_to 'set product', new_product_detail_path, class:"dropdown-item" %>
+            </li>
+            <li>
+            <%= link_to 'set product', new_product_detail_path, class:"dropdown-item"%>
+            </li>
+            <li>
+            <%= link_to 'set product', new_product_detail_path, class:"dropdown-item" %>
+            </li>
+          </ul>
+        </li>
+      
+        <li class="nav-item">
+        <%= link_to 'Sales Report', orders_path, class: 'nav-link text-white' %>
+      </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+</main>
+<div class="b-example-divider"></div>

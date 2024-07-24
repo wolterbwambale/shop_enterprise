@@ -1,0 +1,30 @@
+<h4 class="text-center py-2">List of Suppliers</h4>
+<div class="d-flex justify-content-end py-2 px-4">
+<%= link_to "Generate PDF", company_infos_path(format: :pdf, search: params[:search], period: params[:period], from_date: params[:from_date], to_date: params[:to_date]), class: "btn btn-secondary tbt-sm" %>
+</div>
+<table class="table table-bordered table-striped table-hover table-sm">
+  <thead class="thead-dark">
+<tr>
+<th>Company Name</th>
+<th>Address</th>
+<th>Physical Address</th>
+<th>Website</th>
+<th>Telephone</th>
+<th>P.O.Box</th>
+<th>Tin</th>
+
+</tr>
+</thead>
+<%@company_infos.each do |company|%>
+    <tr>
+    <td><%= link_to company.company_name, company_info_path(company)%></td>
+    <td><%=company.address%></td>
+    <td><%=company.physical_address%></td>
+    <td><%=company.website%></td>
+    <td><%=company.telephone%></td>
+    <td><%=company.postal_box%></td>
+    <td><%=company.Tin_number%></td>
+    </tr>
+<%end%>
+
+</table>

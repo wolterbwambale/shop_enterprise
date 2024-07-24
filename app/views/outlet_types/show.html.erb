@@ -1,0 +1,8 @@
+<h4>OutletType</h4>
+<p><%= @outlet_type.name%></p>
+
+<%= link_to "Edit", edit_outlet_type_path(@outlet_type), class:"btn btn-secondary btn-sm"%>
+<%= link_to "Delete", outlet_type_path(@outlet_type), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure, You want to delete #{@outlet_type.name}?"
+                  },class:"btn btn-danger btn-sm" %>

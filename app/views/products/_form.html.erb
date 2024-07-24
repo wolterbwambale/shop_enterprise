@@ -1,0 +1,55 @@
+<%= form_with model: @product, local: true do |form| %>
+  <div class="items-center">
+    <div class="row mb-3">
+      <div class="col-6">
+        <%= form.label :product_name %><br>
+        <%= form.text_field :product_name, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-6">
+        <%= form.label :quantity %><br>
+        <%= form.text_field :quantity, step: '0.01', class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-6">
+        <%= form.label :price %><br>
+        <%= form.number_field :price, step: 0.01, class: "form-control" %>
+      </div>
+    </div>
+
+    <!-- Dropdown menu to select existing ProductUnit title -->
+    <div class="row mb-3">
+      <div class="col-6">
+        <%= form.label :product_unit_id, "Select Product Unit", class: "form-label" %>
+        <%= form.collection_select :product_unit_id, ProductUnit.all, :id, :title, { prompt: "Select Product Unit" }, { class: "form-select" } %>
+      </div>
+    </div>
+
+    <!-- Dropdown menu to select existing CompanyInfo title -->
+    <div class="row mb-3">
+      <div class="col-6">
+        <%= form.label :company_info_id, "Select Supplier", class: "form-label" %><br>
+        <%= form.collection_select :company_info_id, CompanyInfo.all, :id, :company_name,
+          { prompt: "Select Supplier or Vendor" }, { class: 'form-select' } %>
+      </div>
+    </div>
+
+    <!-- Dropdown menu to select existing Department -->
+    <div class="row mb-3">
+      <div class="col-6">
+        <%= form.label :department_id, "Select Department", class: "form-label" %>
+        <%= form.collection_select :department_id, Department.all, :id, :department_name, { prompt: "Select Department" }, { class: "form-select" } %>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-6">
+        <%= form.submit class: 'btn btn-primary w-100' %>
+      </div>
+    </div>
+  </div>
+<% end %>

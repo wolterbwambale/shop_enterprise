@@ -1,0 +1,52 @@
+<%=form_with(model:@company_detail, local:true) do |form|%>
+  <div class="mt-2 mb-2">
+  <div class="col-6">
+    <%= form.label :name %>
+  <%= form.text_field :name, class:"form-control" %>
+  </div>
+  </div>
+<div class="mb-2">
+<div class="col-6">
+  <%= form.label :address1 %>
+  <%= form.text_field :address1, class:"form-control" %>
+</div>
+</div>
+
+<div class="mb-2">
+<div class="col-6">
+  <%= form.label :address2 %>
+  <%= form.text_field :address2,  class:"form-control" %>
+  </div>
+  </div>
+
+  <div class="mb-2">
+  <div class="col-6">
+  <%= form.label :address3 %>
+  <%= form.text_field :address3, class:"form-control" %>
+</div>
+</div>
+
+<div class="mb-2">
+<div class="col-6">
+  <%= form.label :website %>
+  <%= form.text_field :website, class:"form-control" %>
+  </div>
+  </div>
+
+  <div class="mb-2">
+  <div class="col-6">
+  <%= form.label :telephone_number %>
+  <%= form.text_field :telephone_number, class:"form-control" %>
+</div>
+</div>
+
+<div class="mb-2">
+<div class="col-6">
+  <%= form.label :tin_number %>
+  <%= form.text_field :tin_number, class:"form-control" %>
+  </div>
+  </div>
+<div class="mb-2">
+  <%= form.submit " Save", class:"btn btn-primary btn-sm"%>
+  </div>
+<%end%>

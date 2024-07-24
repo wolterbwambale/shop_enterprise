@@ -1,0 +1,21 @@
+<!-- damage_goods.html.erb -->
+<h2>Damage History</h2>
+
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Date Damaged</th>
+      <th>Quantity Damaged</th>
+      <th>Reason</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @damaged_goods.each do |damaged_good| %>
+      <tr>
+        <td><%= damaged_good.damaged_date.strftime("%Y-%m-%d") %></td>
+        <td><%= damaged_good.quantity %></td>
+        <td><%= damaged_good.damage_reason %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

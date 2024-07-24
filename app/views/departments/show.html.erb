@@ -1,0 +1,15 @@
+
+<p>
+  <strong>Code:</strong>
+  <%= @department.code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @department.department_name %>
+</p>
+<div class="col-mb-3">
+<%= link_to 'Edit', edit_department_path(@department), class: 'btn btn-primary' %>
+</div>
+<%= link_to 'Back', departments_path, class: 'btn btn-secondary' %>
+</div>

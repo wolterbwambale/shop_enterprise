@@ -1,0 +1,9 @@
+<%= form_with model: @outlet_type do |form|%>
+    <div class="form-group col-sm-6">
+    <%=form.label :name%>
+    <%=form.text_field :name,class:"form-control" %>
+    </div>
+    <div class="py-2">
+    <%=form.submit class:"btn btn-primary btn-sm" %>
+    </div>
+<%end%>

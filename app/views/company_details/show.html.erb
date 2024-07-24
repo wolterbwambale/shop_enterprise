@@ -1,0 +1,11 @@
+<h2>company profile</h2>
+<hr>
+<h3>company name:<%=@company_detail.name%></h3>
+<p><%= @company_detail.address1%></p>
+<p><%= @company_detail.address2%></p>
+<p><%= @company_detail.address3%></p>
+<p>Website: <%= @company_detail.website%></p>
+<p>Tel: <%= @company_detail.telephone_number%></p>
+<p><%= @company_detail.tin_number%></p>
+
+<%= link_to "edit", edit_company_detail_path, class:"btn btn-dark btn-sm"%>

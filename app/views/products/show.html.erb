@@ -1,0 +1,103 @@
+<div class="container">
+  <div class="row g-5">
+    <div class="col-md-7 col-lg-8">
+    <%= form_with model: @product, url: damage_goods_product_path(@product), method: :patch, local: true do |form| %>
+      <div class="form-group">
+        <%= form.label :quantity, "Quantity to mark as damaged" %>
+        <%= form.number_field :quantity, step: '0.01', class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= form.label :damage_reason, "Reason for damage" %>
+        <%= form.text_area :damage_reason, class: "form-control" %>
+      </div>
+      <%= form.submit "Mark as Damaged", class: "btn btn-danger" %>
+    <% end %>
+    
+    
+    
+  
+    <h3>Good Received</h3>
+    <%= form_with url: receive_goods_product_path(@product), method: :post do |form| %>
+      <div class="row mb">
+        <div class="col-6">
+        <%= form.label :quantity %>
+        <%= form.text_field :quantity, class: "form-control" %>
+      </div>
+      </div>
+      <div class="row mb">
+        <div class="col-6">
+        <%= form.label :received_date %>
+        <%= form.date_field :received_date, class: "form-control -sm-6" %>
+      </div>
+      </div>
+
+
+      <div class="row mb">
+        <div class="col-6">
+      <div class="form-group">
+      <%= form.label :company_info_id %>
+      <%= form.collection_select :company_info_id, CompanyInfo.all, :id, :company_name, { prompt: "Select Supplier" }, class: "form-control" %>
+    </div>
+    </div>
+
+    <div class="pt-2">
+      <%= form.submit "Receive Goods", class: "btn btn-primary w-50" %>
+  </div>
+    <% end %>
+    </div>
+  
+    
+    <div class="row mb-3 mt-3">
+          <div class="col-6">
+    <%= link_to 'View Issued Products', issued_products_product_path(@product), class:"btn btn-secondary btn-sm w-100%" %>
+    </div>
+    </div>
+    <p clas="text-muted">Issue Item</p>
+    <%= render 'issue', product: @product %>
+    <%= link_to "edit", edit_product_path(@product),class:"btn btn-success btn-sm"%>
+    <%= link_to "Delete", product_path(@product), data: {
+                        turbo_method: :delete,
+                        turbo_confirm: "Are you sure, you want to delete #{@product.product_name}?"
+                      } ,class:"btn btn-danger btn-sm"%>
+
+    <%= link_to 'back',{ action: :index },class:"btn btn-secondary btn-sm"%>
+    
+    </div>
+    <div class="col-md-5 col-lg-4 order-md-last">
+      <h4 class="d-flex justify-content-between align-items-center mb-3">
+        <span class="text-primary"><%=@product.product_name%></span>
+        <span class="badge bg-success rounded-pill"><%=@product.quantity%></span>
+      </h4>
+      <ul class="list-group mb-3">
+        <li class="list-group-item d-flex justify-content-between lh-sm">
+          <div>
+            <h6 class="my-0">Product</h6>
+            <small class="text-muted">Item name</small>
+          </div>
+          <span class="text-muted"><%= @product.product_name%></span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between lh-sm">
+          <div>
+            <h6 class="my-0">Available Quantity</h6>
+            <small class="text-muted">available stock for <%= @product.product_name%></small>
+          </div>
+          <span class="text-muted"><%=@product.quantity%></span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between lh-sm">
+          <div>
+            <h6 class="my-0">Price</h6>
+            <small class="text-muted">item Rate</small>
+          </div>
+          <span class="text-muted"><%= sprintf("%.2f",@product.price)%></span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between">
+          <span>Total (UGX)</span>
+          <strong><%= number_with_delimiter(sprintf("%.2f", @product.total_amount))%></strong>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<hr>
+

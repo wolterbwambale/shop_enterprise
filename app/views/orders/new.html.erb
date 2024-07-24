@@ -1,0 +1,213 @@
+<div class="container-fluid bg-light-custom">
+  <div class="row">
+    <!-- Menu groups on the top -->
+    <div class="col-12">
+      <div class="d-flex justify-content-start gap-2 mt-3" id="menu_groups">
+        <% @categories.each do |category| %>
+          <%= button_tag category.name, type: "button", class: "btn btn-outline-custom menu-group", data: { category_id: category.id } %>
+        <% end %>
+      </div>
+      <hr>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Product buttons in the center -->
+    <div class="col-md-9">
+      <div id="product_buttons" class="d-flex flex-wrap mb-3 py-4 gap-2">
+        <% @product_details.each do |product| %>
+          <div class="product-group" data-category="<%= product.category_id %>">
+            <%= button_tag product.name, type: "button", class: "btn btn-secondary-product product-btn btn-lg mb-2", data: { product_id: product.id, product_name: product.name, product_price: number_with_delimiter(product.price, delimiter: ',') } %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Order summary on the right -->
+    <div class="col-md-3">
+    <div class="card border-dark text-dark bg-gray-custom" style="position: sticky; top: 0; height: 80vh; overflow-y: auto;">
+        <div class="card-body" id="order_summary">
+          <h5 class="card-title">Order Info</h5>
+          <%= form_with(model: @order, local: true) do |form| %>
+            <% if @order.errors.any? %>
+              <div id="error_explanation" class="alert alert-danger">
+                <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+                <ul>
+                  <% @order.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+            <div id="order_items_fields">
+              <!-- Order items will be dynamically added here -->
+            </div>
+            <hr>
+            <div class="d-flex justify-content-between">
+              <strong>Total Amount:</strong>
+              <span id="total_amount">UGX 0.00</span>
+            </div>
+            <div class="mb-3">
+              <%= form.submit "Print Order", class: "btn btn-primary mt-3" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .product-btn {
+    min-width: 120px;
+    height: 80px;
+    font-size: 14px;
+    white-space: normal;
+  }
+  
+  .btn-outline-custom{
+    background-color: #8540F5;
+    color:#ffff;
+  }
+
+  .btn-outline-custom:hover{
+    background-color: #2B0A1A;
+    color:#fff;
+  }
+
+  .bg-light-custom{
+    background-color:#9EC5FE;
+  }
+
+  .btn-secondary-product {
+    background-color:#495057;
+    color:#fff;
+  }
+
+  .btn-secondary-product:hover{
+    background-color:#fff;
+    color:#6610F2;
+  }
+
+  .bg-gray-custom {
+  background-color: #D1E7DD;
+}
+
+  .product-btn:hover {
+    transform: scale(1.1); 
+  }
+
+  .gap-2 > * {
+    margin-right: 2px; 
+  }
+
+  .btn-inputs{
+    width:80px;
+  }
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var menuGroups = document.querySelectorAll('.menu-group');
+  var productButtons = document.querySelectorAll('.product-btn');
+
+  // Initially hide all product buttons
+  productButtons.forEach(function(button) {
+    button.parentNode.style.display = 'none';
+  });
+
+  // Add click event listeners to menu groups
+  menuGroups.forEach(function(menuGroup) {
+    menuGroup.addEventListener('click', function(event) {
+      event.preventDefault();
+      var categoryId = menuGroup.getAttribute('data-category-id');
+
+      // Hide all product buttons
+      productButtons.forEach(function(button) {
+        button.parentNode.style.display = 'none';
+      });
+
+      // Show product buttons for selected category
+      let productGroup = document.querySelectorAll('.product-group[data-category="' + categoryId + '"]');
+      productGroup.forEach(function(group) {
+        group.style.display = 'block';
+      });
+    });
+  });
+
+  // Add product to order items
+  productButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+      var productId = this.getAttribute('data-product-id');
+      var productName = this.getAttribute('data-product-name');
+      var productPrice = this.getAttribute('data-product-price').replace(/,/g, '');
+
+      // Check if product already exists in order items
+      var existingOrderItem = document.querySelector(`.order-item[data-product-id="${productId}"]`);
+      if (existingOrderItem) {
+        var quantityField = existingOrderItem.querySelector('input[type="number"]');
+        var currentQuantity = parseInt(quantityField.value, 10);
+        quantityField.value = currentQuantity + 1;
+      } else {
+        var orderItemsFields = document.getElementById('order_items_fields');
+        var newFieldset = document.createElement('fieldset');
+        var index = new Date().getTime(); // Unique index for each new item
+
+        newFieldset.classList.add('order-item');
+        newFieldset.setAttribute('data-product-id', productId);
+
+        newFieldset.innerHTML = `
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="flex-grow-1">
+              <input type="hidden" name="order[order_items_attributes][${index}][product_detail_id]" value="${productId}">
+              <p class="mb-0 pr">${productName} - <span class="mb-0"><span class="price">UGX ${parseFloat(productPrice).toFixed(2)}</span></span></p>
+            </div>
+            <div class="d-flex align-items-center">
+              <input type="number" name="order[order_items_attributes][${index}][quantity]" id="order_order_items_attributes_${index}_quantity" class="form-control me-2 btn-inputs" value="1" min="1">
+              <button type="button" class="btn btn-danger btn-sm remove-item-btn">X</button>
+            </div>
+          </div>
+        `;
+
+        orderItemsFields.appendChild(newFieldset);
+
+        // Add event listener to newly created remove button
+        var removeButton = newFieldset.querySelector('.remove-item-btn');
+        removeButton.addEventListener('click', function() {
+          newFieldset.remove();
+          updateTotalAmount();
+        });
+      }
+      updateTotalAmount();
+    });
+  });
+
+  // Remove item button logic
+  document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('remove-item-btn')) {
+      event.preventDefault();
+      event.target.closest('.order-item').remove();
+      updateTotalAmount();
+    }
+  });
+
+  // Function to update total amount
+  function updateTotalAmount() {
+    var totalAmount = 0;
+    var orderItems = document.querySelectorAll('.order-item');
+
+    orderItems.forEach(function(item) {
+      var quantity = parseInt(item.querySelector('input[type="number"]').value, 10);
+      var priceString = item.querySelector('.price').innerText.replace('UGX','').trim().replace(/,/g, '');
+      var price = parseFloat(priceString);
+      totalAmount += quantity * price;
+    });
+
+    document.getElementById('total_amount').innerText = 'UGX ' + totalAmount.toFixed(2);
+  }
+});
+
+
+</script>

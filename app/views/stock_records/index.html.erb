@@ -1,0 +1,25 @@
+<!-- app/views/stock_records/index.html.erb -->
+<h1>All Stock Records</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Company</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @stock_records.each do |record| %>
+      <tr>
+        <td><%= record.product.product_name %></td>
+        <td><%= record.company_info.company_name %></td>
+        <td><%= record.quantity %></td>
+        <td><%= number_to_currency(record.price) %></td>
+        <td><%= record.created_at.to_s(:short) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

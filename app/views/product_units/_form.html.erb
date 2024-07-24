@@ -1,0 +1,40 @@
+<%= form_with(model: @product_unit, local: true) do |form| %>
+    <% if @product_unit.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@product_unit.errors.count, "error") %> prohibited this product_unit from being saved:</h2>
+        <ul>
+          <% @product_unit.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="row mb-3">
+     <div class="col-6">
+      <%= form.label :code %>
+      <%= form.text_field :code, class:"form-control" %>
+    </div>
+    </div>
+  
+    <div class="row mb-3">
+    <div class="col-6">
+      <%= form.label :title %>
+      <%= form.text_field :title, class:"form-control" %>
+    </div>
+    </div>
+  
+    <div class="row mb-3">
+    <div class="col-6">
+      <%= form.label :description %>
+      <%= form.text_area :description, class:"form-control" %>
+    </div>
+    </div>
+  
+    <div class="row mb-3">
+      <div class="col-6">
+      <%= form.submit class:"btn btn-primary btn-sm w-100" %>
+    </div>
+    </div>
+  <% end %>
+  

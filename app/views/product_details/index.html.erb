@@ -1,0 +1,22 @@
+
+
+    <table class="table table-bordered table-striped table-hover table-sm">
+  <thead class="thead-dark">
+<tr>
+<th> Name</th>
+<th>Quantity</th>
+<th>price</th>
+
+
+</tr>
+</thead>
+<%@product_details.each do |product|%>
+    <tr>
+    <td><%= link_to product.name, product_detail_path(product)%></td>
+    <td><%=product.quantity%></td>
+    <td><%=product.price%></td>
+    
+    </tr>
+<%end%>
+
+</table>

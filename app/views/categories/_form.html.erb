@@ -1,0 +1,23 @@
+<%= form_with(model:@category, local:true) do |form|%>
+    <div class="mb-2">
+    <div class="col-6">
+    <%= form.label :code%>
+    <%= form.text_field :code ,class:"form-control"%>
+    </div>
+    </div>
+
+    <div class="mb-2">
+    <div class="col-6">
+    <%= form.label :name%>
+    <%= form.text_field :name, class:"form-control"%>
+    </div>
+    </div>
+
+    <div class="mb-2">
+    <div class="col-6">
+    <%= form.label  :description%>
+    <%= form.text_area :description, class:"form-control"%>
+    </div>
+    </div>
+    <%= form.submit%>
+    <%end%>

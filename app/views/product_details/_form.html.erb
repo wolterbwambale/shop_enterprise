@@ -1,0 +1,33 @@
+<div class="container">
+<%=form_with(model: @product_detail, local:true) do |form|%>
+    <div class="row mb-3">
+    <div class="col-6">
+     <%= form.label :name %>
+     <%= form.text_field :name, class:"form-control" %>
+   </div>
+   </div>
+
+   <div class="row mb-3">
+   <div class="col-6">
+    <%= form.label :quantity %>
+    <%= form.number_field :quantity, class:"form-control" %>
+  </div>
+  </div>
+
+  <div class="row mb-3">
+  <div class="col-6">
+   <%= form.label :price %>
+   <%= form.number_field :price, step: 0.01, class: "form-control" %>
+   </div>
+   </div>
+   <div class="row mb-3">
+      <div class="col-6">
+        <%= form.label :category_id, "Category" %>
+        <%= form.collection_select :category_id, @categories, :id, :name, { prompt: "Select a category" }, { class: "form-control" } %>
+      </div>
+    </div>
+
+   <%= form.submit %>
+    <%end%>
+
+</div>
